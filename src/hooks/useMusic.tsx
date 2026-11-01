@@ -6,6 +6,7 @@ interface MusicApi {
   muted: boolean
   volume: number
   failed: boolean
+  audioElement: HTMLAudioElement | null
   /** Call from a tap or click only. Browsers block audio otherwise. */
   start: () => Promise<void>
   toggle: () => void
@@ -87,7 +88,7 @@ export function MusicProvider({ children }: { children: ReactNode }) {
   }, [])
 
   const value = useMemo<MusicApi>(
-    () => ({ playing, muted, volume, failed, start, toggle, toggleMute, setVolume }),
+    () => ({ playing, muted, volume, failed, audioElement: audioRef.current, start, toggle, toggleMute, setVolume }),
     [playing, muted, volume, failed, start, toggle, toggleMute, setVolume],
   )
 

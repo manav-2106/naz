@@ -9,6 +9,7 @@ import { haptics } from '../lib/haptics'
 import { sfx } from '../lib/sfx'
 import { Arrow, Blossom, Bow, CakeSlice, Clip, Heart, MilkCarton, Paw, Pin, Potato, Sparkle, Star, Tape, type DoodleProps, type TapeColor } from './doodles'
 import Reveal from './Reveal'
+import ScratchNotes from './ScratchNotes'
 import SectionHeading from './SectionHeading'
 
 type Icon = ComponentType<DoodleProps>
@@ -218,6 +219,8 @@ export default function Notes() {
             ))}
           </ul>
         </div>
+
+        <ScratchNotes />
       </div>
     </section>
   )

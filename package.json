@@ -7,13 +7,17 @@
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test:astronomy": "node --experimental-strip-types scripts/test-astronomy.js",
+    "test:api": "node --experimental-strip-types scripts/test-api.js",
+    "test:contrast": "node scripts/check-contrast.js"
   },
   "dependencies": {
     "@fontsource-variable/caveat": "5.3.0",
     "@fontsource-variable/fraunces": "5.3.0",
     "@fontsource-variable/fredoka": "5.3.0",
     "@fontsource-variable/nunito": "5.3.0",
+    "@upstash/redis": "^1.39.0",
     "@use-gesture/react": "10.3.1",
     "canvas-confetti": "1.9.4",
     "clsx": "2.1.1",

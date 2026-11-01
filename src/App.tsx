@@ -3,6 +3,7 @@ import BilliCompanion from './components/BilliCompanion'
 import BirthdayCake from './components/BirthdayCake'
 import Countdown from './components/Countdown'
 import Cursor from './components/Cursor'
+import DaySkyBackground from './components/DaySkyBackground'
 import EasterEggs from './components/EasterEggs'
 import ErrorBoundary from './components/ErrorBoundary'
 import Footer from './components/Footer'
@@ -13,9 +14,10 @@ import LastLineGoodbye from './components/LastLineGoodbye'
 import Letter from './components/Letter'
 import Loader from './components/Loader'
 import LoveCoupons from './components/LoveCoupons'
-import LoveJar from './components/LoveJar'
+import MoodSheet from './components/MoodSheet'
 import MusicPlayer from './components/MusicPlayer'
 import Notes from './components/Notes'
+import PaperFoldSection from './components/PaperFoldSection'
 import Scrapbook from './components/Scrapbook'
 import ScrollRibbon from './components/ScrollRibbon'
 import Sparkles from './components/Sparkles'
@@ -23,12 +25,18 @@ import ThemeToggle from './components/ThemeToggle'
 import Timeline from './components/Timeline'
 import Toaster from './components/Toaster'
 import { WavyDivider } from './components/doodles'
-import { MusicProvider } from './hooks/useMusic'
-import { getBirthdayInfo } from './lib/birthday'
 import { lockScroll, useLenis } from './hooks/useLenis'
+import { MusicProvider } from './hooks/useMusic'
+import { initAuthKey } from './lib/api'
+import { getBirthdayInfo } from './lib/birthday'
 
-const MilkcakeGame = lazy(() => import('./components/MilkcakeGame'))
+// Code-split heavy interactive sections with React.lazy
+const GrowingJar = lazy(() => import('./components/GrowingJar'))
+const PlayOurSong = lazy(() => import('./components/PlayOurSong'))
 const LoveHeart = lazy(() => import('./components/LoveHeart'))
+const TimeCapsule = lazy(() => import('./components/TimeCapsule'))
+const OurSky = lazy(() => import('./components/OurSky'))
+const MilkcakeGame = lazy(() => import('./components/MilkcakeGame'))
 
 /** Mounts children only once the placeholder is near the viewport, so chunks load on approach. */
 function NearView({ children, minHeight }: { children: ReactNode; minHeight: string }) {
@@ -75,6 +83,7 @@ export default function App() {
   useLenis()
 
   useEffect(() => {
+    initAuthKey()
     const bInfo = getBirthdayInfo()
     document.title = `happy ${bInfo.targetAgeOrdinal} birthday, naz 🎂`
   }, [])
@@ -85,6 +94,8 @@ export default function App() {
 
   return (
     <MusicProvider>
+      <DaySkyBackground />
+
       <ErrorBoundary silent>
         <Cursor />
       </ErrorBoundary>
@@ -109,59 +120,151 @@ export default function App() {
           <ErrorBoundary silent>
             <BilliCompanion />
           </ErrorBoundary>
+          <ErrorBoundary silent>
+            <MoodSheet />
+          </ErrorBoundary>
         </>
       )}
 
       <main>
+        {/* 1. Hero */}
         <Safe>
           <Hero ready={opened} />
         </Safe>
+
+        {/* 2. Countdown */}
         <Safe>
-          <Countdown />
+          <PaperFoldSection>
+            <Countdown />
+          </PaperFoldSection>
         </Safe>
+
+        {/* 3. Birthday Cake */}
         <Safe>
-          <BirthdayCake />
+          <PaperFoldSection>
+            <BirthdayCake />
+          </PaperFoldSection>
         </Safe>
+
         <Divider />
+
+        {/* 4. Timeline */}
         <Safe>
-          <Timeline />
+          <PaperFoldSection>
+            <Timeline />
+          </PaperFoldSection>
         </Safe>
+
         <Divider />
+
+        {/* 5. Notes (with F7 Scratch Notes) */}
         <Safe>
-          <Notes />
+          <PaperFoldSection>
+            <Notes />
+          </PaperFoldSection>
         </Safe>
+
         <Divider />
+
+        {/* 6. Jar of reasons that keeps growing (F13) */}
         <Safe>
-          <Scrapbook />
+          <PaperFoldSection>
+            <NearView minHeight="70dvh">
+              <GrowingJar />
+            </NearView>
+          </PaperFoldSection>
         </Safe>
+
         <Divider />
+
+        {/* 7. Scrapbook & Coupons */}
         <Safe>
-          <LoveCoupons />
+          <PaperFoldSection>
+            <Scrapbook />
+          </PaperFoldSection>
         </Safe>
+
         <Divider />
+
         <Safe>
-          <Letter />
+          <PaperFoldSection>
+            <LoveCoupons />
+          </PaperFoldSection>
         </Safe>
+
         <Divider />
+
+        {/* 8. Letter */}
         <Safe>
-          <LoveJar />
+          <PaperFoldSection>
+            <Letter />
+          </PaperFoldSection>
         </Safe>
+
         <Divider />
+
+        {/* 9. Play our song interlude (F12) */}
         <Safe>
-          <NearView minHeight="90dvh">
-            <LoveHeart />
-          </NearView>
+          <PaperFoldSection>
+            <NearView minHeight="65dvh">
+              <PlayOurSong />
+            </NearView>
+          </PaperFoldSection>
         </Safe>
+
         <Divider />
+
+        {/* 10. LoveHeart interactive formation */}
         <Safe>
-          <NearView minHeight="90dvh">
-            <MilkcakeGame />
-          </NearView>
+          <PaperFoldSection>
+            <NearView minHeight="90dvh">
+              <LoveHeart />
+            </NearView>
+          </PaperFoldSection>
         </Safe>
+
+        <Divider />
+
+        {/* 11. Time capsule for 19-year-old self (F2) */}
         <Safe>
-          <GiftBox />
+          <PaperFoldSection>
+            <NearView minHeight="75dvh">
+              <TimeCapsule />
+            </NearView>
+          </PaperFoldSection>
+        </Safe>
+
+        <Divider />
+
+        {/* 12. Our Sky: Astronomy & Constellation (F1 + F3) */}
+        <Safe>
+          <PaperFoldSection>
+            <NearView minHeight="85dvh">
+              <OurSky />
+            </NearView>
+          </PaperFoldSection>
+        </Safe>
+
+        <Divider />
+
+        {/* 13. Milkcake Catch Game */}
+        <Safe>
+          <PaperFoldSection>
+            <NearView minHeight="90dvh">
+              <MilkcakeGame />
+            </NearView>
+          </PaperFoldSection>
+        </Safe>
+
+        {/* 14. Gift Box Surprise */}
+        <Safe>
+          <PaperFoldSection>
+            <GiftBox />
+          </PaperFoldSection>
         </Safe>
       </main>
+
+      {/* 15. Footer & Last Line Goodbye */}
       <Safe>
         <Footer />
       </Safe>
