@@ -118,6 +118,7 @@
     font: inherit;
     color: inherit;
     cursor: pointer;
+    transition: transform 0.15s ease, opacity 0.15s ease;
   }
   img {
     display: block;
@@ -128,6 +129,21 @@
   h3,
   p {
     margin: 0;
+  }
+  /* Scrollbar: thin and pastel */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--petal);
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--strawberry);
   }
   /* The grain: one static pre-rendered tile, never filtered, never animated */
   body::after {
@@ -184,6 +200,19 @@
     touch-action: manipulation;
     user-select: none;
     -webkit-user-select: none;
+    transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.15s ease;
+  }
+  .btn-sticker:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 3px 6px 0 var(--rose);
+  }
+  .btn-sticker:active:not(:disabled) {
+    transform: translateY(1px);
+    box-shadow: 2px 2px 0 var(--rose);
+  }
+  .btn-sticker:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
   }
 
   .paper {

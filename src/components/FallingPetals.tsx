@@ -55,7 +55,8 @@ export default function FallingPetals({ active = true }: { active?: boolean }) {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none absolute inset-0 overflow-hidden select-none z-15"
+      className="pointer-events-none absolute inset-0 overflow-hidden select-none"
+      style={{ zIndex: 15 }}
     >
       {petals.map((p) => (
         <motion.div

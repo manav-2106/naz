@@ -27,12 +27,20 @@ function lerpColor(c1: RGB, c2: RGB, t: number): string {
   return `rgb(${r}, ${g}, ${b})`
 }
 
-const STOPS = [
+const DAY_STOPS = [
   { progress: 0.0, bg: hexToRgb('#FFF8F4'), wash: hexToRgb('#FFE3EC') },
   { progress: 0.25, bg: hexToRgb('#FFFDFB'), wash: hexToRgb('#FFCFE0') },
   { progress: 0.5, bg: hexToRgb('#FFFBF0'), wash: hexToRgb('#FFEBA8') },
   { progress: 0.75, bg: hexToRgb('#FFF0F5'), wash: hexToRgb('#FFB5CD') },
   { progress: 1.0, bg: hexToRgb('#FFEBF2'), wash: hexToRgb('#FFCFE0') },
+]
+
+const NIGHT_STOPS = [
+  { progress: 0.0, bg: hexToRgb('#160E22'), wash: hexToRgb('#321844') },
+  { progress: 0.25, bg: hexToRgb('#1B112C'), wash: hexToRgb('#401B4E') },
+  { progress: 0.5, bg: hexToRgb('#241635'), wash: hexToRgb('#51245E') },
+  { progress: 0.75, bg: hexToRgb('#1E1230'), wash: hexToRgb('#451D52') },
+  { progress: 1.0, bg: hexToRgb('#170E24'), wash: hexToRgb('#321844') },
 ]
 
 export default function DaySkyBackground() {
@@ -43,8 +51,10 @@ export default function DaySkyBackground() {
     const el = bgRef.current
     if (!el) return
 
+    const isNight = () => document.documentElement.getAttribute('data-theme') === 'starlight'
+
     if (reducedMotion) {
-      el.style.backgroundColor = '#FFFBF0'
+      el.style.backgroundColor = isNight() ? '#1a1228' : '#FFFBF0'
       return
     }
 
@@ -52,19 +62,17 @@ export default function DaySkyBackground() {
 
     const updateColor = () => {
       ticking = false
+      const stops = isNight() ? NIGHT_STOPS : DAY_STOPS
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight
-      if (maxScroll <= 0) return
+      const p = maxScroll <= 0 ? 0 : Math.min(1, Math.max(0, window.scrollY / maxScroll))
 
-      const p = Math.min(1, Math.max(0, window.scrollY / maxScroll))
-
-      // Find surrounding stops
       let i = 0
-      while (i < STOPS.length - 2 && p > STOPS[i + 1]!.progress) {
+      while (i < stops.length - 2 && p > stops[i + 1]!.progress) {
         i++
       }
 
-      const s1 = STOPS[i]!
-      const s2 = STOPS[i + 1]!
+      const s1 = stops[i]!
+      const s2 = stops[i + 1]!
       const localT = (p - s1.progress) / (s2.progress - s1.progress)
 
       const currentBg = lerpColor(s1.bg, s2.bg, localT)
@@ -82,10 +90,20 @@ export default function DaySkyBackground() {
       }
     }
 
+    const observer = new MutationObserver((mutations) => {
+      for (const m of mutations) {
+        if (m.attributeName === 'data-theme') {
+          updateColor()
+        }
+      }
+    })
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] })
+
     window.addEventListener('scroll', onScroll, { passive: true })
     updateColor()
 
     return () => {
+      observer.disconnect()
       window.removeEventListener('scroll', onScroll)
     }
   }, [reducedMotion])

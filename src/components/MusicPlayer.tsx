@@ -149,7 +149,7 @@ export default function MusicPlayer() {
           }}
           whileHover={{ scale: 1.08 }}
           whileTap={{ scale: 0.94 }}
-          className="relative flex h-13 w-13 items-center justify-center rounded-full border-[3px] border-cocoa bg-petal shadow-md"
+          className="relative flex h-12 w-12 items-center justify-center rounded-full border-[3px] border-cocoa bg-petal shadow-md"
         >
           <motion.div
             animate={music.playing && !music.muted ? { rotate: 360 } : { rotate: 0 }}

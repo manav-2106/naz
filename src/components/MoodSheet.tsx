@@ -91,7 +91,13 @@ export default function MoodSheet() {
       {/* Sheet Backdrop and Container */}
       <AnimatePresence>
         {open && (
-          <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/35 backdrop-blur-xs p-0 sm:p-4">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/35 backdrop-blur-sm p-0 sm:p-4"
+          >
             {/* Click backdrop to close */}
             <div className="absolute inset-0" onClick={() => setOpen(false)} />
 
@@ -226,7 +232,7 @@ export default function MoodSheet() {
                 )}
               </AnimatePresence>
             </motion.div>
-          </div>
+          </motion.div>
         )}
       </AnimatePresence>
     </>

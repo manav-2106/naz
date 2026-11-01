@@ -11,14 +11,20 @@ const SECTION_REACTIONS: Record<string, string> = {
   cake: 'Ooh your birthday cake! Tap the candles to blow them out and make a big wish! 🎂🕯️',
   timeline: 'Aww look at our lovely journey! Every single moment with you is precious 📖✨',
   notes: 'Sweet little love notes written straight from his heart to yours 📝♡',
+  scrapbook: "Look at all your gorgeous photos! Billi's favorite cutie in the whole universe 📸🌸",
   memories: "Look at all your gorgeous photos! Billi's favorite cutie in the whole universe 📸🌸",
   coupons: 'Look at all your love coupons! You can redeem them whenever you want ♡ 🎟️',
   letter: '🤫 Psst... look at the tiny sign I am holding for you above the envelope! Open it gently 💌🐾',
   jar: 'Reasons why you are loved endlessly! Pick a lucky note from the jar 🫙✨',
+  'growing-jar': 'Reasons why you are loved endlessly! Pick a lucky note from the jar 🫙✨',
+  'play-our-song': 'Our song! Watch the little spinning vinyl and sing along ♡ 🎵✨',
   heart: 'A big glowing heart beating only for you, Jannnnn 💖✨',
   game: "Let's catch the treats together! If you score high, I get to wear my party hat! 🎮🧁",
   gift: 'A special surprise box waiting just for you! Open it, open it! 🎁✨',
   goodbye: 'Sleepy time now... happy birthday, Ms. Naz! Go eat lots of cake! 🍰🐾😴',
+  sky: 'Look at our real night sky! The actual stars that shone above us 🌟✨',
+  'our-sky': 'Look at our real night sky! The actual stars that shone above us 🌟✨',
+  capsule: 'Your precious time capsule to future you! Seal it with love 💌🌙',
 }
 
 export default function BilliCompanion() {

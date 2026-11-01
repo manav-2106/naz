@@ -199,7 +199,7 @@ export default function Notes() {
       </div>
       <div className="relative mx-auto max-w-[1180px]">
         <Reveal>
-          <SectionHeading text={copy.notes.heading} hand={copy.notes.headingHand} />
+          <SectionHeading text={`${reasons.length} reasons, in no particular order`} hand="reasons" />
           <p className="sub-hand relative mt-3 flex items-center gap-2">
             {copy.notes.sub}
             <Arrow className="hidden w-14 rotate-[40deg] sm:block" />

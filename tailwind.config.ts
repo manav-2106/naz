@@ -39,6 +39,8 @@ export default {
         lift: '0 18px 36px -10px rgba(242,104,154,0.34), 0 6px 14px rgba(242,104,154,0.18)',
         sticker: '3px 4px 0 #F2689A',
         'sticker-sm': '2px 3px 0 #F2689A',
+        '2xs': '0 1px 2px 0 rgba(0,0,0,0.07)',
+        xs: '0 1px 3px 0 rgba(0,0,0,0.10), 0 1px 2px -1px rgba(0,0,0,0.06)',
       },
       borderRadius: {
         blob: '28px 34px 26px 36px',
@@ -115,6 +117,11 @@ export default {
         breathe: 'breathe 3.4s ease-in-out infinite',
         wiggle: 'wiggle 1.2s ease-in-out infinite',
         wave: 'wave 0.85s ease-in-out infinite',
+      },
+      scale: {
+        '102': '1.02',
+        '97': '0.97',
+        '103': '1.03',
       },
     },
   },

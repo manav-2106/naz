@@ -148,15 +148,19 @@ function SingleScratchCard({ card }: ScratchCardProps) {
               ref={canvasRef}
               aria-hidden="true"
               onPointerDown={(e) => {
+                e.preventDefault()
+                e.currentTarget.setPointerCapture(e.pointerId)
                 isScratching.current = true
                 scratchAt(e.clientX, e.clientY)
               }}
               onPointerMove={(e) => {
                 if (isScratching.current) {
+                  e.preventDefault()
                   scratchAt(e.clientX, e.clientY)
                 }
               }}
-              onPointerUp={() => {
+              onPointerUp={(e) => {
+                e.currentTarget.releasePointerCapture(e.pointerId)
                 isScratching.current = false
                 checkCoverage()
               }}
@@ -166,7 +170,7 @@ function SingleScratchCard({ card }: ScratchCardProps) {
                   checkCoverage()
                 }
               }}
-              className="w-full h-full cursor-pointer touch-none"
+              className="w-full h-full cursor-pointer touch-none select-none"
             />
             {/* Gentle hint overlay on canvas */}
             <div className="pointer-events-none absolute bottom-2 inset-x-0 text-center font-hand text-xs text-cocoa/60 font-bold">

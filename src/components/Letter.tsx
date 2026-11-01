@@ -167,7 +167,7 @@ export default function Letter() {
               {/* Paper Sign Plaque */}
               <div className="relative rounded-2xl border-2 border-cocoa bg-[#FFFDF5] px-3.5 py-1.5 shadow-md">
                 {/* Washi tape at top */}
-                <div className="absolute -top-2 left-1/2 -translate-x-1/2 h-3 w-10 rotate-[-1.5deg] rounded-xs bg-[#FFD1DC]/95 border-x border-cocoa/20 shadow-2xs" />
+                <div className="absolute -top-2 left-1/2 -translate-x-1/2 h-3 w-10 rotate-[-1.5deg] rounded-sm bg-[#FFD1DC]/95 border-x border-cocoa/20 shadow-2xs" />
                 
                 <div className="flex items-center gap-1.5">
                   <span className="text-xs sm:text-sm">
