@@ -110,7 +110,7 @@ function SingleScratchCard({ card }: ScratchCardProps) {
   }, [cleared, triggerReveal])
 
   // Accurately map touch/mouse screen coords to canvas coords regardless of card rotation & DPR
-  const getLocalCoords = (clientX: number, clientY: number) => {
+  const getLocalCoords = useCallback((clientX: number, clientY: number) => {
     const canvas = canvasRef.current
     if (!canvas) return null
 
@@ -130,9 +130,9 @@ function SingleScratchCard({ card }: ScratchCardProps) {
     const localY = ry + h / 2
 
     return { localX, localY }
-  }
+  }, [card.rotation])
 
-  const scratchAt = (clientX: number, clientY: number, isMove = false) => {
+  const scratchAt = useCallback((clientX: number, clientY: number, isMove = false) => {
     const canvas = canvasRef.current
     if (!canvas || cleared) return
     const ctx = canvas.getContext('2d', { willReadFrequently: true })
@@ -165,7 +165,7 @@ function SingleScratchCard({ card }: ScratchCardProps) {
 
     lastPointRef.current = { x: px, y: py }
     haptics.light()
-  }
+  }, [cleared, getLocalCoords])
 
   // Native non-passive touch events for 100% reliable mobile phone scratching (prevents scroll hijacking)
   useEffect(() => {
@@ -212,7 +212,7 @@ function SingleScratchCard({ card }: ScratchCardProps) {
       canvas.removeEventListener('touchend', onTouchEnd)
       canvas.removeEventListener('touchcancel', onTouchEnd)
     }
-  }, [cleared, checkCoverage])
+  }, [cleared, checkCoverage, scratchAt])
 
   return (
     <div
@@ -244,7 +244,9 @@ function SingleScratchCard({ card }: ScratchCardProps) {
                 if (e.pointerType === 'mouse') {
                   try {
                     e.currentTarget.setPointerCapture(e.pointerId)
-                  } catch {}
+                  } catch (err) {
+                    void err
+                  }
                   isScratching.current = true
                   scratchAt(e.clientX, e.clientY, false)
                 }
@@ -258,7 +260,9 @@ function SingleScratchCard({ card }: ScratchCardProps) {
                 if (e.pointerType === 'mouse') {
                   try {
                     e.currentTarget.releasePointerCapture(e.pointerId)
-                  } catch {}
+                  } catch (err) {
+                    void err
+                  }
                   isScratching.current = false
                   lastPointRef.current = null
                   checkCoverage()

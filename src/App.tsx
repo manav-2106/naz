@@ -13,7 +13,6 @@ import Hero from './components/Hero'
 import LastLineGoodbye from './components/LastLineGoodbye'
 import Letter from './components/Letter'
 import Loader from './components/Loader'
-import LoveCoupons from './components/LoveCoupons'
 import MoodSheet from './components/MoodSheet'
 import MusicPlayer from './components/MusicPlayer'
 import Notes from './components/Notes'
@@ -31,7 +30,6 @@ import { initAuthKey } from './lib/api'
 import { getBirthdayInfo } from './lib/birthday'
 
 // Code-split heavy interactive sections with React.lazy
-const GrowingJar = lazy(() => import('./components/GrowingJar'))
 const PlayOurSong = lazy(() => import('./components/PlayOurSong'))
 const LoveHeart = lazy(() => import('./components/LoveHeart'))
 const TimeCapsule = lazy(() => import('./components/TimeCapsule'))
@@ -166,18 +164,7 @@ export default function App() {
 
         <Divider />
 
-        {/* 6. Jar of reasons that keeps growing (F13) */}
-        <Safe>
-          <PaperFoldSection>
-            <NearView minHeight="70dvh">
-              <GrowingJar />
-            </NearView>
-          </PaperFoldSection>
-        </Safe>
-
-        <Divider />
-
-        {/* 7. Scrapbook & Coupons */}
+        {/* 6. Scrapbook */}
         <Safe>
           <PaperFoldSection>
             <Scrapbook />
@@ -186,15 +173,7 @@ export default function App() {
 
         <Divider />
 
-        <Safe>
-          <PaperFoldSection>
-            <LoveCoupons />
-          </PaperFoldSection>
-        </Safe>
-
-        <Divider />
-
-        {/* 8. Letter */}
+        {/* 7. Letter */}
         <Safe>
           <PaperFoldSection>
             <Letter />
