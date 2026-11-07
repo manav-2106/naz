@@ -57,8 +57,13 @@ function CursorInner() {
         return
       }
       const key = target.getAttribute('data-cursor')
+      if (target.matches('input[type="range"]') || key === 'drag') {
+        setLabel(copy.cursor.drag || 'drag')
+        setMode('paw')
+        return
+      }
       setLabel(labelFor(key))
-      setMode(key === 'drag' ? 'paw' : 'ring')
+      setMode('ring')
     }
     const onDown = (e: PointerEvent): void => {
       if (e.pointerType === 'mouse') setPressed(true)
