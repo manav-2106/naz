@@ -19,11 +19,11 @@ import SectionHeading from './SectionHeading'
 type Stage = 'closed' | 'cracked' | 'open' | 'paper'
 
 const lineStyle: Record<LetterLine['kind'], string> = {
-  greeting: 'text-[2.1rem] font-bold leading-[1.1]',
-  aside: 'text-[1.45rem] text-cocoa-soft',
-  body: 'text-[1.5rem]',
-  sign: 'text-[2rem] font-bold leading-[1.15]',
-  ps: 'text-[1.4rem] text-cocoa-soft -rotate-1',
+  greeting: 'text-[1.75rem] sm:text-[2.1rem] font-bold leading-[1.2]',
+  aside: 'text-[1.25rem] sm:text-[1.45rem] text-cocoa-soft',
+  body: 'text-[1.25rem] sm:text-[1.45rem] leading-[1.4]',
+  sign: 'text-[1.75rem] sm:text-[2rem] font-bold leading-[1.2]',
+  ps: 'text-[1.2rem] sm:text-[1.4rem] text-cocoa-soft',
 }
 
 function Words({ line, visible, reduced }: { line: LetterLine; visible: boolean; reduced: boolean }) {
@@ -35,16 +35,16 @@ function Words({ line, visible, reduced }: { line: LetterLine; visible: boolean;
   return (
     <>
       {words.map((w, i) => (
-        <motion.span
-          key={i}
-          className="inline-block whitespace-pre-line"
-          initial={false}
-          animate={{ opacity: visible ? 1 : 0, y: visible || reduced ? 0 : 4 }}
-          transition={{ duration: reduced ? 0 : 0.5, delay: visible && !reduced ? i * 0.045 : 0 }}
-        >
-          {w}
-          {i < words.length - 1 ? ' ' : ''}
-        </motion.span>
+        <span key={i} className="inline-block mr-[0.25em]">
+          <motion.span
+            className="inline-block"
+            initial={false}
+            animate={{ opacity: visible ? 1 : 0, y: visible || reduced ? 0 : 4 }}
+            transition={{ duration: reduced ? 0 : 0.5, delay: visible && !reduced ? i * 0.045 : 0 }}
+          >
+            {w}
+          </motion.span>
+        </span>
       ))}
     </>
   )
@@ -227,20 +227,30 @@ export default function Letter() {
 
         {(stage === 'open' || stage === 'paper') && (
           <motion.article
-            className="relative z-10 mx-auto mt-4 w-full max-w-[60ch]"
+            className="relative z-10 mx-auto mt-4 w-full max-w-[620px] px-2 sm:px-0"
             initial={{ y: -slide, rotate: 0 }}
-            animate={{ y: 0, rotate: -1.2 }}
+            animate={{ y: 0, rotate: 0 }}
             transition={{ type: 'spring', stiffness: 70, damping: 15, delay: stage === 'open' ? 0.35 : 0 }}
             aria-label={copy.letter.heading}
+            onClick={() => {
+              if (shown < letter.length) {
+                setShown(letter.length)
+              }
+            }}
           >
             <TornEdge className="block h-3 w-full" fill="#FFFDFB" seed={21} flip />
-            <div className="paper lined relative bg-milk px-6 pb-8 pt-4 sm:px-10">
+            <div className="paper lined relative bg-milk px-5 py-6 sm:px-10 sm:pb-8 sm:pt-4">
               {letter.map((line, i) => (
-                <p key={i} className={clsx('mb-[1.1rem] font-hand text-cocoa', lineStyle[line.kind])}>
+                <p key={i} className={clsx('mb-[1.1rem] font-hand text-cocoa break-words', lineStyle[line.kind])}>
                   <Words line={line} visible={i < shown} reduced={reduced} />
-                  {writing && i === shown - 1 && <Pen className="ml-1 inline-block h-7 w-7 animate-bob align-middle" />}
+                  {writing && i === shown - 1 && <Pen className="ml-1 inline-block h-6 w-6 sm:h-7 sm:w-7 animate-bob align-middle" />}
                 </p>
               ))}
+              {writing && (
+                <p className="mt-4 text-center font-hand text-sm text-cocoa-soft/75 cursor-pointer select-none">
+                  (tap anywhere to reveal all ♡)
+                </p>
+              )}
             </div>
             <TornEdge className="block h-3 w-full" fill="#FFFDFB" seed={5} />
           </motion.article>
