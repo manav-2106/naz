@@ -8,7 +8,6 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "lint": "eslint .",
-    "test:astronomy": "node --experimental-strip-types scripts/test-astronomy.js",
     "test:api": "node --experimental-strip-types scripts/test-api.js",
     "test:contrast": "node scripts/check-contrast.js"
   },

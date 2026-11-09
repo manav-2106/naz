@@ -1,9 +1,7 @@
 /**
- * Client-side API client for Time Capsule, Constellation Stars, and Reasons Jar.
+ * Client-side API client for Time Capsule.
  * Includes graceful offline fallbacks, default keys for dev, and safe parsing.
  */
-
-import type { ConstellationStar } from '../data/constellation'
 
 const KEY_STORAGE = 'naz_auth_key'
 const DEFAULT_NAZ_KEY = 'mine'
@@ -122,91 +120,6 @@ export const api = {
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'the post office is closed right now. try again in a bit'
       return { success: false, error: msg }
-    }
-  },
-
-  /** Fetch live added stars */
-  async getStars(): Promise<ConstellationStar[]> {
-    try {
-      const res = await fetch('/api/stars')
-      const { ok, data } = await safeJsonParse<{ stars?: ConstellationStar[] }>(res)
-      if (!ok) return []
-      return data.stars || []
-    } catch {
-      return []
-    }
-  },
-
-  /** Add a live star to the constellation */
-  async addStar(
-    author: 'naz' | 'mr. naz',
-    text: string,
-  ): Promise<{ success: boolean; star?: ConstellationStar; error?: string }> {
-    try {
-      const key = getStoredAuthKey()
-      const headers: Record<string, string> = {
-        'Content-Type': 'application/json',
-      }
-      if (key) {
-        headers['x-naz-key'] = key
-        headers['x-owner-key'] = key
-        headers['authorization'] = `Bearer ${key}`
-      }
-
-      const res = await fetch('/api/stars', {
-        method: 'POST',
-        headers,
-        body: JSON.stringify({ author, text }),
-      })
-
-      const { ok, data } = await safeJsonParse<{ error?: string; star?: ConstellationStar }>(res)
-      if (!ok) {
-        return { success: false, error: (data.error as string) || 'could not add star' }
-      }
-      return { success: true, star: data.star }
-    } catch {
-      return { success: false, error: 'sky connection paused. try again in a bit.' }
-    }
-  },
-
-  /** Fetch custom reasons */
-  async getReasons(): Promise<{ unlocked: Array<{ id: string; text: string; unlockAt: string }>; lockedCount: number } | null> {
-    try {
-      const res = await fetch('/api/reasons')
-      const { ok, data } = await safeJsonParse<{
-        unlocked?: Array<{ id: string; text: string; unlockAt: string }>
-        lockedCount?: number
-      }>(res)
-      if (!ok) return null
-      return {
-        unlocked: data.unlocked || [],
-        lockedCount: data.lockedCount || 0,
-      }
-    } catch {
-      return null
-    }
-  },
-
-  /** Owner adds a reason */
-  async addReason(
-    text: string,
-    unlockAt: string,
-    ownerKey: string,
-  ): Promise<{ success: boolean; error?: string }> {
-    try {
-      const res = await fetch('/api/reasons', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-owner-key': ownerKey,
-        },
-        body: JSON.stringify({ text, unlockAt }),
-      })
-      const { ok, data } = await safeJsonParse<{ error?: string }>(res)
-      if (!ok) return { success: false, error: (data.error as string) || 'failed to add reason' }
-      return { success: true }
-    } catch {
-      return { success: false, error: 'network error' }
     }
   },
 }

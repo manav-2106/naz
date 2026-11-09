@@ -106,14 +106,6 @@ function apiDevMiddleware(): Plugin {
             const { default: handler } = await import('./api/capsule.ts')
             await handler(vReq, vRes)
             return
-          } else if (route === 'stars') {
-            const { default: handler } = await import('./api/stars.ts')
-            await handler(vReq, vRes)
-            return
-          } else if (route === 'reasons') {
-            const { default: handler } = await import('./api/reasons.ts')
-            await handler(vReq, vRes)
-            return
           }
         } catch (err) {
           console.error('API middleware error:', err)

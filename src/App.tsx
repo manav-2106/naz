@@ -33,7 +33,6 @@ import { getBirthdayInfo } from './lib/birthday'
 const PlayOurSong = lazy(() => import('./components/PlayOurSong'))
 const LoveHeart = lazy(() => import('./components/LoveHeart'))
 const TimeCapsule = lazy(() => import('./components/TimeCapsule'))
-const OurSky = lazy(() => import('./components/OurSky'))
 const MilkcakeGame = lazy(() => import('./components/MilkcakeGame'))
 
 /** Mounts children only once the placeholder is near the viewport, so chunks load on approach. */
@@ -215,18 +214,7 @@ export default function App() {
 
         <Divider />
 
-        {/* 12. Our Sky: Astronomy & Constellation (F1 + F3) */}
-        <Safe>
-          <PaperFoldSection>
-            <NearView minHeight="85dvh">
-              <OurSky />
-            </NearView>
-          </PaperFoldSection>
-        </Safe>
-
-        <Divider />
-
-        {/* 13. Milkcake Catch Game */}
+        {/* 11. Milkcake Catch Game */}
         <Safe>
           <PaperFoldSection>
             <NearView minHeight="90dvh">
