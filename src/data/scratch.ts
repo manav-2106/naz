@@ -23,19 +23,19 @@ export const SCRATCH_CONFIG = {
       id: 'scratch-1',
       rotation: -2.5,
       tapeColor: 'butter',
-      text: 'i practise what to say before i call you. then i forget it anyway.',
+      text: 'Sometimes I open our chats just to read our old conversations.',
     },
     {
       id: 'scratch-2',
       rotation: 3.2,
       tapeColor: 'petal',
-      text: 'i saved your first voice note. don’t tell anyone.',
+      text: 'obviousally my name at first.',
     },
     {
       id: 'scratch-3',
       rotation: -1.8,
       tapeColor: 'strawberry',
-      text: 'when you leave the chat i check if you’re back. i am a mess.',
+      text: 'I miss you even when we have just said goodbye.',
     },
     {
       id: 'scratch-4',

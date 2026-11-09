@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion'
-import { getBirthdayInfo } from '../lib/birthday'
 import { haptics } from '../lib/haptics'
 import { sfx } from '../lib/sfx'
 import { Blossom, Heart, Paw, Sparkle, Star, Tape } from './doodles'
@@ -15,41 +14,60 @@ interface Milestone {
 }
 
 export default function Timeline() {
-  const bInfo = getBirthdayInfo()
-
   const milestones: Milestone[] = [
     {
       date: '9 September',
       title: 'The Day We Met',
-      description: 'The exact day the universe brought us into each other’s story. The day that started everything.',
+      description:
+        "I was honestly so nervous that day, but you somehow made me feel comfortable. Didn't know that one meeting would mean so much to me.",
       icon: Heart,
       color: '#ffe3ec',
     },
     {
-      date: 'Late Nights',
-      title: 'Hours That Felt Like Seconds',
-      description: 'Talking about everything and nothing until 3 AM. Realizing how effortlessly you make me smile.',
+      date: 'Our First Call',
+      title: 'Where It All Started',
+      description:
+        'After going back from college, you called me and we just kept talking. I still remember how naturally our conversations started growing.',
       icon: Sparkle,
       color: '#ffeba8',
     },
     {
-      date: 'Inside Jokes',
-      title: 'Becoming "Billi" & "Jannnnn"',
-      description: 'The first time you made that sassy, adorable face and officially earned your cat ears and potato status.',
-      icon: Paw,
-      color: '#ffcfe0',
-    },
-    {
-      date: 'Every Single Day',
-      title: 'The Sweet Little Moments',
-      description: 'Every random text, shared laugh, and sweet voice note that turned ordinary days into my favorite ones.',
+      date: 'Getting Closer',
+      title: 'Little by Little',
+      description:
+        'From our first handhold to our hugs and kisses, every little moment brought us closer. I started feeling more and more attached to you.',
       icon: Blossom,
       color: '#ffd6e0',
     },
     {
-      date: `Today: ${bInfo.targetAgeOrdinal} Birthday`,
-      title: `Happy ${bInfo.targetAgeOrdinal}, Ms. Naz!`,
-      description: `${bInfo.targetAge} years of the most wonderful soul in the world. And I get to be here celebrating with you.`,
+      date: 'Inside Jokes',
+      title: 'Becoming "Ms naz" & "Mr.naz" & "samantha and rachel"',
+      description:
+        "I don't think anyone else would understand half of our jokes, and that's exactly what makes them special to me.",
+      icon: Paw,
+      color: '#ffcfe0',
+    },
+    {
+      date: 'Our Little Dates',
+      title: 'Exploring Everywhere',
+      description:
+        'Going to all those restaurants around college, eating, talking and spending time together. Honestly, the place never mattered as much as the person I was with.',
+      icon: Heart,
+      color: '#fff0f5',
+    },
+    {
+      date: 'Our First Kiss',
+      title: "A Moment I'll Remember",
+      description:
+        "That little moment when I finally told you I love you, secretly worried I'd ruined the moment, and then you said it back. I wish I could relive it.",
+      icon: Sparkle,
+      color: '#ffe3ec',
+    },
+    {
+      date: 'Today: Your 18th Birthday',
+      title: 'Happy 18th, My Girl!',
+      description:
+        "From two strangers talking on Instagram to becoming such an important part of each other's lives. I'm so happy I get to celebrate your special day with you. ❤️",
       icon: Star,
       color: '#ffe8d6',
     },
