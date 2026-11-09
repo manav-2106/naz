@@ -19,6 +19,8 @@ const captions: readonly string[] = [
   'more cake please',
   'ungrateful potato, caught on camera',
   'me trying to look normal',
+  'one of my favourite moments with you',
+  'my forever favourite person',
   'the next one isn’t here yet',
 ]
 

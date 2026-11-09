@@ -18,7 +18,7 @@ export const config = {
   heroPrefix: 'for my',
 
   /** Photos: /public/photos/photo-01.webp ... photo-NN.webp. Change the count and add files, that's it. */
-  photoCount: 10,
+  photoCount: 12,
   photoDir: '/photos',
   photoExt: 'webp',
   musicSrc: '/music/song.mp3',
