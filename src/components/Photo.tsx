@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import clsx from 'clsx'
 import { config } from '../data/config'
 import type { Memory } from '../data/memories'
@@ -10,9 +10,32 @@ interface Props {
   eager?: boolean
 }
 
-/** Photo with a soft fade-in. A missing file shows a pink placeholder instead of a broken icon. */
-export default function Photo({ memory, fit = 'cover', eager = false }: Props) {
+function toJpegFallback(src: string): string {
+  return src.replace(/\.webp(\?.*)?$/i, '.jpeg$1')
+}
+
+function InnerPhoto({ memory, fit = 'cover', eager = false }: Props) {
+  const [src, setSrc] = useState(memory.src)
   const [state, setState] = useState<'loading' | 'ok' | 'fail'>('loading')
+  const imgRef = useRef<HTMLImageElement>(null)
+
+  useEffect(() => {
+    const img = imgRef.current
+    if (img && img.complete && img.naturalWidth > 0) {
+      setState('ok')
+    }
+  }, [src])
+
+  const handleError = (): void => {
+    const jpegSrc = toJpegFallback(src)
+    if (jpegSrc !== src) {
+      setSrc(jpegSrc)
+      setState('loading')
+    } else {
+      setState('fail')
+    }
+  }
+
   return (
     <div className="absolute inset-0 bg-blush">
       {state !== 'ok' && (
@@ -23,7 +46,8 @@ export default function Photo({ memory, fit = 'cover', eager = false }: Props) {
       )}
       {state !== 'fail' && (
         <img
-          src={memory.src}
+          ref={imgRef}
+          src={src}
           alt={memory.alt}
           width={800}
           height={1000}
@@ -31,7 +55,7 @@ export default function Photo({ memory, fit = 'cover', eager = false }: Props) {
           decoding="async"
           draggable={false}
           onLoad={() => setState('ok')}
-          onError={() => setState('fail')}
+          onError={handleError}
           className={clsx(
             'absolute inset-0 h-full w-full transition-[opacity,transform] duration-700 ease-soft',
             fit === 'cover' ? 'object-cover' : 'object-contain',
@@ -41,4 +65,9 @@ export default function Photo({ memory, fit = 'cover', eager = false }: Props) {
       )}
     </div>
   )
+}
+
+/** Photo with a soft fade-in, cached-load check, and JPEG fallback. A missing file shows a pink placeholder instead of a broken icon. */
+export default function Photo(props: Props) {
+  return <InnerPhoto key={props.memory.src} {...props} />
 }

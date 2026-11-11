@@ -72,7 +72,7 @@ function CollageItem({ m, look, boardRef, top, onFront, onOpen }: {
       style={{ marginTop: look.dy, left: look.dx, rotate: look.rot, zIndex: top === m.id ? 40 : (m.id % 5) + 1 }}
       initial={{ opacity: 0, scale: 0.85, y: 24 }}
       whileInView={{ opacity: 1, scale: 1, y: 0 }}
-      viewport={{ once: true, margin: '0px 0px -6% 0px' }}
+      viewport={{ once: true, amount: 0.05 }}
       transition={{ type: 'spring', stiffness: 220, damping: 16 }}
     >
       <motion.div
@@ -104,7 +104,7 @@ function CollageItem({ m, look, boardRef, top, onFront, onOpen }: {
           }
         }}
       >
-        <Polaroid m={m} look={look} />
+        <Polaroid m={m} look={look} eager />
       </motion.div>
     </motion.li>
   )
@@ -167,7 +167,7 @@ function Stack({ onOpen }: { onOpen: (id: number) => void }) {
               style={{ zIndex: 30 - o, transform: `translateY(${o * 12}px) rotate(${look.rot * (o + 1) * 0.8}deg) scale(${1 - o * 0.05})` }}
               aria-hidden="true"
             >
-              <Polaroid m={m} look={{ ...look, aspect: 'aspect-[4/5]' }} className="h-full" />
+              <Polaroid m={m} look={{ ...look, aspect: 'aspect-[4/5]' }} eager className="h-full" />
             </div>
           ),
         )}
@@ -216,7 +216,7 @@ function Timeline({ onOpen }: { onOpen: (id: number) => void }) {
                 style={{ transform: `rotate(${look.rot}deg)` }}
                 aria-label={m.caption}
               >
-                <Polaroid m={m} look={look} />
+                <Polaroid m={m} look={look} eager />
               </button>
             </Reveal>
           </li>

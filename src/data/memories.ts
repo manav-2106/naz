@@ -34,7 +34,7 @@ export const memories: Memory[] = Array.from({ length: config.photoCount }, (_, 
   const caption = i === 0 ? config.firstMemory.caption : (captions[i] ?? fallbackCaption)
   return {
     id: i + 1,
-    src: `${config.photoDir}/photo-${pad(i + 1)}.${config.photoExt}`,
+    src: `${config.photoDir}/photo-${pad(i + 1)}.${config.photoExt}?v=2`,
     alt: `photo ${i + 1}: ${caption}`,
     caption,
     date: i === 0 ? config.firstMemory.date : '',
